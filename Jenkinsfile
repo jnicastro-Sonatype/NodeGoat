@@ -7,6 +7,7 @@ pipeline {
 
     environment {
         Sonatype_App_Name = 'NodeGoat-Jenkins'      // App Name in the Lifecycle Platform
+        Sonatype_IQ_Server = 'https://jmn-iq-server.ngrok.io'
     }
 
     // this is optional on Linux, if jenkins does not have access to your locally installed docker
@@ -57,11 +58,11 @@ pipeline {
             }
         }
         
-        stage ('OSS Scan') {
+        stage ('Sonatype OSS Scan') {
             steps {
                 sh '''
                 echo "Beginning Sonatype OSS Scan"
-                java -jar /Nexus/nexus-iq-cli-*.jar -a admin:admin -D includeNpmDependencies -s https://jmn-iq-server.ngrok.io -i $Sonatype_App_Name -t stage-release ./
+                java -jar /Nexus/nexus-iq-cli-*.jar -a admin:admin -D includeNpmDependencies -s $Sonatype_IQ_Server -i $Sonatype_App_Name -t stage-release ./
                 '''
             }
         }
