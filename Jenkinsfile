@@ -61,7 +61,7 @@ pipeline {
             steps {
                 sh '''
                 echo "Beginning Sonatype OSS Scan"
-                java -jar /Nexus/nexus-iq-cli-1.121.0-01.jar -a admin:admin -D includeNpmDependencies -s https://jmn-iq-server.ngrok.io -i $Sonatype_App_Name -t stage-release ./
+                java -jar /Nexus/nexus-iq-cli-*.jar -a admin:admin -D includeNpmDependencies -s https://jmn-iq-server.ngrok.io -i $Sonatype_App_Name -t stage-release ./
                 '''
             }
         }
