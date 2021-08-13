@@ -6,7 +6,7 @@ pipeline {
     agent any
 
     environment {
-        Sonatype_App_Name = 'NodeGoat'      // App Name in the Veracode Platform
+        Sonatype_App_Name = 'NodeGoat-Jenkins'      // App Name in the Lifecycle Platform
     }
 
     // this is optional on Linux, if jenkins does not have access to your locally installed docker
@@ -21,7 +21,7 @@ pipeline {
     }
 
     stages{
-        stage ('environment verify') {
+        stage ('Environment Verify') {
             steps {
                 script {
                     if (isUnix() == true) {
@@ -37,7 +37,7 @@ pipeline {
             }
         }
 
-        stage ('build') {
+        stage ('Build') {
             steps {
                 // use the NodeJS plugin
                 nodejs(nodeJSInstallationName: 'NodeJS-12.0.0') {
@@ -61,7 +61,7 @@ pipeline {
             steps {
                 sh '''
                 echo "Beginning Sonatype OSS Scan"
-                java -jar /Nexus/nexus-iq-cli-1.121.0-01.jar -a admin:admin -D includeNpmDependencies -s https://jmn-iq-server.ngrok.io -i NodeGoat-Jenkins -t stage-release ./
+                java -jar /Nexus/nexus-iq-cli-1.121.0-01.jar -a admin:admin -D includeNpmDependencies -s https://jmn-iq-server.ngrok.io -i $Sonatype_App_Name -t stage-release ./
                 '''
             }
         }
