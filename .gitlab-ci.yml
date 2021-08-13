@@ -15,26 +15,6 @@ build_app:
     artifacts:
         paths:
             - node_modules/
-
-veracode_scan:
-    image: openjdk:8-alpine
-    stage: security
-    before_script:
-        - wget https://repo1.maven.org/maven2/com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/19.2.5.6/vosp-api-wrappers-java-19.2.5.6.jar -O VeracodeJavaAPI.jar
-        - tar -zcvf upload.tar.gz app package.json package-lock.json
-        - ls -lF
-    script:
-        # the scan WILL fail, so just fire and forget
-        - java -jar VeracodeJavaAPI.jar -vid $VERACODE_API_ID -vkey $VERACODE_API_KEY
-            -action UploadAndScan -appname "VulnImages-NodeGoat" -createprofile false
-            -filepath upload.tar.gz -version "Commit ${CI_COMMIT_SHA:0:8} - Job $CI_JOB_ID"
-    allow_failure: true
-
-veracode_sca_scan:
-    image: node:10.9.0
-    stage: security
-    script:
-        - curl -sSL https://download.sourceclear.com/ci.sh | sh
                     
 dockerize:
     image: docker:stable
