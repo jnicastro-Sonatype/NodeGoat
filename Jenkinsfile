@@ -65,7 +65,7 @@ pipeline {
                 sh '''
                 echo "Beginning Sonatype OSS Scan"
                 wget https://download.sonatype.com/clm/scanner/latest.jar 
-                java -jar nexus-iq-cli-*.jar -a "${IQ_User}":"${IQ_Key}" -D includeNpmDependencies -s $Sonatype_IQ_Server -i $Sonatype_App_Name -t stage-release ./
+                java -jar latest.jar -a "${IQ_User}":"${IQ_Key}" -D includeNpmDependencies -s $Sonatype_IQ_Server -i $Sonatype_App_Name -t stage-release ./
                 '''
                 }
             }
