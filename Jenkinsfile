@@ -62,7 +62,7 @@ pipeline {
             steps {
                 sh '''
                 echo "Beginning Sonatype OSS Scan"
-                java -jar /Nexus/nexus-iq-cli-*.jar -a admin:admin -D includeNpmDependencies -s $Sonatype_IQ_Server -i $Sonatype_App_Name -t stage-release ./
+                java -jar /Nexus/nexus-iq-cli-*.jar -a $IQ_User:$IQ_Password -D includeNpmDependencies -s $Sonatype_IQ_Server -i $Sonatype_App_Name -t stage-release ./
                 '''
             }
         }
