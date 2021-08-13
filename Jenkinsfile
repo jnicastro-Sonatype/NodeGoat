@@ -60,9 +60,11 @@ pipeline {
         
         stage ('OSS Scan') {
             steps {
+                withCredentials([ usernamePassword ( 
+                    credentialsId: 'IQ_login', usernameVariable: 'IQ_User', passwordVariable: 'IQ_Key') ])
                 sh '''
                 echo "Beginning Sonatype OSS Scan"
-                java -jar /Nexus/nexus-iq-cli-*.jar -a $IQ_User:$IQ_Password -D includeNpmDependencies -s $Sonatype_IQ_Server -i $Sonatype_App_Name -t stage-release ./
+                java -jar /Nexus/nexus-iq-cli-*.jar -a '${IQ_User}':'${IQ_Key}' -D includeNpmDependencies -s $Sonatype_IQ_Server -i $Sonatype_App_Name -t stage-release ./
                 '''
             }
         }
