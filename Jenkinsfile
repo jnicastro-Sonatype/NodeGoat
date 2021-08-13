@@ -64,8 +64,8 @@ pipeline {
                     credentialsId: 'IQ_login', usernameVariable: 'IQ_User', passwordVariable: 'IQ_Key') ]) {
                 sh '''
                 echo "Beginning Sonatype OSS Scan"
-                wget https://download.sonatype.com/clm/scanner/latest.jar -O -
-                java -jar /Nexus/latest.jar -a "${IQ_User}":"${IQ_Key}" -D includeNpmDependencies -s $Sonatype_IQ_Server -i $Sonatype_App_Name -t stage-release ./
+                wget https://download.sonatype.com/clm/scanner/latest.jar -O /
+                java -jar /latest.jar -a "${IQ_User}":"${IQ_Key}" -D includeNpmDependencies -s $Sonatype_IQ_Server -i $Sonatype_App_Name -t stage-release ./
                 '''
                 }
             }
