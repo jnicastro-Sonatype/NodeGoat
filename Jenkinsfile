@@ -63,6 +63,8 @@ pipeline {
                 echo "Beginning Sonatype OSS Scan"
                 java ./-jar /Nexus/nexus-iq-cli-1.121.0-01.jar -a admin:admin -s https://jmn-iq-server.ngrok.io -i NodeGoat-Jenkins -t build ./
                 '''
+            }
+        }
 
         // only works on *nix, as we're building a Linux image
         //  uses the natively installed docker
