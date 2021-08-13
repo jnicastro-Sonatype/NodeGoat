@@ -58,7 +58,7 @@ pipeline {
             }
         }
         
-        stage ('Sonatype OSS Scan') {
+        stage ('OSS Scan') {
             steps {
                 sh '''
                 echo "Beginning Sonatype OSS Scan"
