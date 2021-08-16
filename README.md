@@ -1,6 +1,6 @@
 # Introduction
 
-This project is designed to show how Sonatype can integrate into a build process with the IQ CLI tool.  This complete process will include:
+This project is designed to show how Sonatype can integrate into a build process with the Nexus Lifecycle CLI tool.  This complete process will include:
 
 * building and packaging the app for scanning
 * downloading the latest version of Sonatype's Nexus Lifecycle CLI tool
@@ -11,7 +11,7 @@ This is a Sonatype-specific readme file.  For the original, see README-original.
 
 # How to use this
 
-You have 3 options:
+You have 2 options:
 
 1. build from the existing repo (not making any modifications)
 2. create a copy (fork) the existing repo for the ability to make your own mods and then build your modified copy
