@@ -40,7 +40,7 @@ Goto Jenkins --> Manage Jenkins --> Global Tool Configuration and setup the tool
 
 #### 2.1 NodeJS
 
-Add a NodeJS installation like the following (the names are important, so match them)
+Add a NodeJS installation like the following (the names are important, so match them). 
 
 ![NodeJS config](./doc/images/NodeJS_config.jpg)
 
@@ -48,21 +48,11 @@ Add a NodeJS installation like the following (the names are important, so match 
 
 Goto Jenkins --> Manage Jenkins --> Configure Credentials --> Credentials and add the following to the Jenkins store, global domain:
 
-#### 3.1 Veracode login
+#### 3.1 login
 
 Add a 'username with password' credential with the following:
 
-![API ID and Key](./doc/images/API_creds.jpg)
-
-The username is your API-ID and the password is your API-Key.  The ID field must be "veracode_login" (to match the Jenkinsfile).  The Description field can be anything.
-
-#### 3.2 Srcclr token
-
-Add a 'secret text' credential with the following:
-
-![srcclr token](./doc/images/Srcclr_token.jpg)
-
-The 'Secret' is the Source Clear token (please use a workspace agent, not an org-level agent).  The ID must be "SCA_Token" (to match the Jenkinsfile).  The Description field can be anything.
+The username is your IQ_ID and the password is your IQ_Key.  The ID field must be "IQ_Login" (to match the Jenkinsfile).  The Description field can be anything.
 
 ### 4. Create the Jenkins job
 
@@ -70,24 +60,12 @@ Create a Jenkins Pipeline job with the following Pipeline section (you can ignor
 
 ![jenkins job](./doc/images/Jenkins_job.jpg)
 
-Note: for the Pipeline scanner, use 'Jenkinsfile_vpipe' as the Script Path.
-
 ### 5. Build w/Jenkins
 
 Click Build Now to run the job.
 
 ![jenkins build](./doc/images/Jenkins_build.jpg)
 
-## Option 2 - Getting this repo locally
-
-Assumes you already have an account on GitHub, GitLab, or a similar service.
-
-Fork the existing repo into your account, and then use your copy of the repo.  Clone it locally, make mods, and push them back to your account.
-
-### Building w/Jenkins
-
-Follow the steps above, except use your repo instead of the master copy on gitlab.com
-
 ## Deploying 
 
-Coming...
+This step is only needed if you have "Continue on Error" setup, otherwise the OSS scan should fail as there are policy violations NodeGoat which is expected. 
