@@ -41,7 +41,7 @@ pipeline {
         stage ('Build') {
             steps {
                 // use the NodeJS plugin
-                nodejs(nodeJSInstallationName: 'NodeJS-12.0.0') {
+                nodejs(nodeJSInstallationName: 'NodeJS-16.0.0') {
                     script {
                         if(isUnix() == true) {
                             //sh 'npm config ls'
