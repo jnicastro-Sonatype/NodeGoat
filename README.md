@@ -4,7 +4,7 @@ This project is designed to show how Sonatype can integrate into a build process
 
 * building and packaging the app for scanning
 * downloading the latest version of Sonatype's Nexus Lifecycle CLI tool
-* Run a Sonatype OSS scan for vulnerabilities, as well as license and architecture issues and provide the results both in the platform as well as directly in the CLI for   further automation steps if needed. 
+* running a Sonatype OSS scan for vulnerabilities, as well as license and architecture issues and provide the results both in the platform as well as directly in the CLI for   further automation steps if needed. 
 * building a Docker image for deployment (Only if the previous step either shows no vulns or you code in a continue on error provision)
 
 This is a Sonatype-specific readme file.  For the original, see README-original.md.
