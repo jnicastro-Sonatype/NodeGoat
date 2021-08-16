@@ -60,7 +60,7 @@ The username is your IQ_ID and the password is your IQ_Key.  The ID field must b
 
 Create a Jenkins Pipeline job with the following Pipeline section (you can ignore all the other fields):
 
-![Pipeline Setup](./doc/images/Pipeline Setup.jpg)
+![Pipeline Setup](./doc/images/PipelineSetup.jpg)
 
 ### 5. Build w/Jenkins
 
