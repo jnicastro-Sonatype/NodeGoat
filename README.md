@@ -42,7 +42,7 @@ Goto Jenkins --> Manage Jenkins --> Global Tool Configuration and setup the tool
 
 Add a NodeJS installation like the following (the names are important, so match them). 
 
-![NodeJS config](./doc/images/NodeJS_config.jpg)
+![NodeJS config](./doc/images/NodeSetup.jpg)
 
 ### 3. Configure Credentials in Jenkins 
 
@@ -54,13 +54,19 @@ Add a 'username with password' credential with the following:
 
 The username is your IQ_ID and the password is your IQ_Key.  The ID field must be "IQ_Login" (to match the Jenkinsfile).  The Description field can be anything.
 
+![Credential Setup](./doc/images/IQCredentials.jpg)
+
 ### 4. Create the Jenkins job
 
 Create a Jenkins Pipeline job with the following Pipeline section (you can ignore all the other fields):
 
+![Pipeline Setup](./doc/images/Pipeline Setup.jpg)
+
 ### 5. Build w/Jenkins
 
 Click Build Now to run the job.
+
+![Build Step](./doc/images/BuildStep.jpg)
 
 ## Deploying 
 
