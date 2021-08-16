@@ -62,8 +62,6 @@ Create a Jenkins Pipeline job with the following Pipeline section (you can ignor
 
 Click Build Now to run the job.
 
-![jenkins build](./doc/images/Jenkins_build.jpg)
-
 ## Deploying 
 
 This step is only needed if you have "Continue on Error" setup, otherwise the OSS scan should fail as there are policy violations NodeGoat which is expected. 
