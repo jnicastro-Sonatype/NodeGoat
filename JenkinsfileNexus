@@ -1,1 +1,92 @@
+/*
+ * Normal Jenkinsfile that will build and SCA scans
+ */
 
+pipeline {
+    agent any
+
+    environment {
+        Sonatype_App_Name = 'NodeGoat-Jenkins'      // App Name in the Lifecycle Platform
+        Sonatype_IQ_Server = 'https://jmn-iq-server.ngrok.io'
+    }
+
+    // this is optional on Linux, if jenkins does not have access to your locally installed docker
+    //tools {
+        // these match up with 'Manage Jenkins -> Global Tool Config'
+        //'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'docker-latest' 
+    //}
+
+    options {
+        // only keep the last x build logs and artifacts (for space saving)
+        buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '20'))
+    }
+
+    stages{
+        stage ('Environment Verify') {
+            steps {
+                script {
+                    if (isUnix() == true) {
+                        sh 'pwd'
+                        sh 'ls -la'
+                        sh 'echo $PATH'
+                    }
+                    else {
+                        bat 'dir'
+                        bat 'echo %PATH%'
+                    }
+                }
+            }
+        }
+
+        stage ('Build') {
+            steps {
+                // use the NodeJS plugin
+                nodejs(nodeJSInstallationName: 'NodeJS-16.0.0') {
+                    script {
+                        if(isUnix() == true) {
+                            //sh 'npm config ls'
+                            sh 'npm --version'
+                            sh 'npm install'
+                        }
+                        else {
+                            bat 'npm --version'
+                            bat 'npm install'  
+                        }
+                    }
+
+                }
+            }
+        }
+        
+        stage('IQ Policy Check') {
+              policyEvaluation = nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: '$Sonatype_App_Name', iqStage: 'release', jobCredentialsId: ''
+              sh "echo ${policyEvaluation.applicationCompositionReportUrl}"
+        }
+        ---stage('Create TAG') {
+              createTag nexusInstanceId: 'nxrm3', tagAttributesJson: "{\"IQScan\": \"${policyEvaluation.applicationCompositionReportUrl}\", \"JenkinsBuild\": \"${BUILD_URL}\"}", tagName: "IQ-Policy-Evaluation_${currentBuild.number}"
+        ---}
+    
+        ---stage('Publish') {
+              // Deploy the maven build
+              nexusPublisher nexusInstanceId: 'nxrm3', nexusRepositoryId: 'maven-releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: 'war', filePath: './target/struts2-rest-showcase.war']], mavenCoordinate: [artifactId: 'struts2-rest-showcase', groupId: 'org.apache.struts', packaging: 'war', version: '2.5.10']]], tagName: "IQ-Policy-Evaluation_${currentBuild.number}"
+        ---}
+        
+        // only works on *nix, as we're building a Linux image
+        //  uses the natively installed docker
+        stage ('Deploy') {
+            when { expression { return (isUnix() == true) } }
+            steps {
+                echo 'building Docker image'
+                sh 'docker version'
+
+                ansiColor('xterm') {
+                    sh 'docker build -t nodegoat:${BUILD_TAG} .'
+                }
+                
+                // split into separate stage??
+                echo 'Deploying ...'
+        
+            }
+        }
+    }
+}
