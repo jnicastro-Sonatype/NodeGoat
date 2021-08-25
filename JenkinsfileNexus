@@ -59,8 +59,10 @@ pipeline {
         }
         
         stage('IQ Policy Check') {
+            steps {
               policyEvaluation = nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: '$Sonatype_App_Name', iqStage: 'release', jobCredentialsId: ''
               sh "echo ${policyEvaluation.applicationCompositionReportUrl}"
+            }
         }
         
         // only works on *nix, as we're building a Linux image
