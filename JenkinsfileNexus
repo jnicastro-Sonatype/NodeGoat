@@ -62,14 +62,6 @@ pipeline {
               policyEvaluation = nexusPolicyEvaluation failBuildOnNetworkError: false, iqApplication: '$Sonatype_App_Name', iqStage: 'release', jobCredentialsId: ''
               sh "echo ${policyEvaluation.applicationCompositionReportUrl}"
         }
-        ---stage('Create TAG') {
-              createTag nexusInstanceId: 'nxrm3', tagAttributesJson: "{\"IQScan\": \"${policyEvaluation.applicationCompositionReportUrl}\", \"JenkinsBuild\": \"${BUILD_URL}\"}", tagName: "IQ-Policy-Evaluation_${currentBuild.number}"
-        ---}
-    
-        ---stage('Publish') {
-              // Deploy the maven build
-              nexusPublisher nexusInstanceId: 'nxrm3', nexusRepositoryId: 'maven-releases', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: 'war', filePath: './target/struts2-rest-showcase.war']], mavenCoordinate: [artifactId: 'struts2-rest-showcase', groupId: 'org.apache.struts', packaging: 'war', version: '2.5.10']]], tagName: "IQ-Policy-Evaluation_${currentBuild.number}"
-        ---}
         
         // only works on *nix, as we're building a Linux image
         //  uses the natively installed docker
